@@ -3,6 +3,7 @@ import sys
 import numpy as np
 import pandas as pd
 import dill
+import pickle
 from sklearn.metrics import r2_score
 from src.exception import CustomException
 from sklearn.model_selection import GridSearchCV
@@ -26,7 +27,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
 
             gs = GridSearchCV(model,para,cv=3)
             gs.fit(X_train,y_train)
-            
+
             model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
 
@@ -38,3 +39,11 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
         return report
     except Exception as e:
         raise CustomException(e,sys)
+    
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            return pickle.load(file_obj)
+
+    except Exception as e:
+        raise CustomException(e, sys)
