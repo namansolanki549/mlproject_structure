@@ -7,10 +7,10 @@ from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 import os
 
 application = Flask(__name__)
+
 app = application
 
 # route for home page
-
 @app.route('/')
 def index():
     return render_template('index.html')
